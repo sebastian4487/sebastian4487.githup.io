@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>บันทึกความทรงจำ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Mali', cursive;
+      background: radial-gradient(#ffe0e0, #ffd6ec);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .book {
+      width: 700px;
+      height: 500px;
+      position: relative;
+      perspective: 2000px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      border-radius: 15px;
+      background: #fff;
+      padding: 30px;
+      overflow: hidden;
+    }
+
+    .page {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 10px;
+      background-image: url('https://www.transparenttextures.com/patterns/book-cover.png');
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      padding: 30px 30px 20px 30px;
+    }
+
+    .page.show {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    h2, p {
+      margin: 0 0 10px;
+      color: #e91e63;
+      font-size: 24px;
+      white-space: pre-wrap;
+    }
+
+    p {
+      font-size: 18px;
+      color: #444;
+      min-height: 80px;
+    }
+
+    img {
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-top: 15px;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      object-fit: cover;
+    }
+
+    img.show {
+      opacity: 1;
+    }
+
+    .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .controls button {
+      background: #f8bbd0;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      font-family: 'Mali', cursive;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .controls button.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="book" id="book">
+    <div class="page show clearfix" id="page0">
+      <h2 id="title"></h2>
+      <p id="content"></p>
+      <img id="image" src="image/myseft.png" alt="first meet" />
+    </div>
+
+    <div class="page clearfix" id="page1">
+      <h2 id="title1"></h2>
+      <p id="content1"></p>
+      <img id="image1" src="image/noeyna.png" alt="noeyna" />
+    </div>
+
+    <div class="page clearfix" id="page2">
+      <h2 id="title2"></h2>
+      <p id="content2"></p>
+      <img id="image2" src="image/gift.png" alt="trip" />
+    </div>
+
+    <div class="controls">
+      <button id="prevBtn" onclick="prevPage()" disabled>ย้อนกลับ</button>
+      <button id="nextBtn" onclick="nextPage()" disabled>เริ่มอ่าน</button>
+    </div>
+  </div>
+
+  <script>
+    const pages = [
+      {
+        title: "สวัสดีครับผมชื่อแบงค์",
+        content: "และนี่คือไดอารี่ที่บันทึกเรื่องราวของผมกับน้อยหน่า",
+        imageId: "image",
+        titleId: "title",
+        contentId: "content",
+        pageId: "page0",
+        imgWidth: "150px",
+        imgHeight: "200px",
+        imgPosition: "center"
+      },
+      {
+        title: "น้อยหน่าคือคนที่ผมรักและใส่ใจที่สุด",
+        content: "เค้าเป็นผู้หญิงคนหนึ่งที่ผมรักมากที่สุดในชีวิตของผมตอนนี้ น้อยหน่าเป็นคนที่สวยมาก น่ารักมากๆ ด้วย ผมไม่รู้จะเจอคนแบบนี้ได้อีกที่ไหน คนที่ดีกับผมและเข้าใจผม",
+        imageId: "image1",
+        titleId: "title1",
+        contentId: "content1",
+        pageId: "page1",
+        imgWidth: "150px",
+        imgHeight: "200px",
+        imgPosition: "left"
+      },
+      {
+        title: "ผมอยากจะเป็นแฟนกับน้อยหน่าและดูแลเค้าให้ได้ดีที่สุดไม่ว่าเค้าจะสุขหรือทุกข์",
+        content: "ผมรักเค้ามากๆ มีบางทีที่เราทะเลาะกันไม่เข้าใจ แต่ผมอยากจะรักษาเค้าไว้ให้ได้ตลอด ตอนนี้เราก็คุยกันมา 1 เดือน 12 วันแล้วนะ เรารักน้อยหน่านะเราเป็นห่วงน้อยหน่าตลอดเราไม่อยากให้ทะเลาะกันเปิดใจคุยกันเราไม่อยากเสียน้อยหน่าไปไหนเลยเราอยากจะอยู่กับน้อยหน่าแบบนี้ไปนานๆเลยนะตอนนี้เราไม่สนใจเลยว่าน้อยหน่าจะเคยทำอะไรกับใครมาก่อนเราอยากให้น้อยหน่ามาเริ่มทุกอย่างใหม่ด้วยกันถึงแม้ว่าเราอาจทำอะไรๆไม่เป็นมากเพราะเราไม่เคยทำแต่เราก็จะพยามให้น้อยหน่าได้มีความสุขนะ",
+        imageId: "image2",
+        titleId: "title2",
+        contentId: "content2",
+        pageId: "page2",
+        imgWidth: "200px",
+        imgHeight: "150px",
+        imgPosition: "right"
+      }
+    ];
+
+    let current = 0;
+
+    function typeText(element, text, speed = 50) {
+      return new Promise((resolve) => {
+        element.textContent = "";
+        let i = 0;
+        function typing() {
+          if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+          } else {
+            resolve();
+          }
+        }
+        typing();
+      });
+    }
+
+    function fadeInImage(img) {
+      return new Promise((resolve) => {
+        img.classList.add("show");
+        img.addEventListener("transitionend", () => {
+          resolve();
+        }, { once: true });
+      });
+    }
+
+    async function showPage(index) {
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("show"));
+      const page = document.getElementById(pages[index].pageId);
+      page.classList.add("show");
+
+      const titleEl = document.getElementById(pages[index].titleId);
+      const contentEl = document.getElementById(pages[index].contentId);
+      const imgEl = document.getElementById(pages[index].imageId);
+      titleEl.textContent = "";
+      contentEl.textContent = "";
+      imgEl.classList.remove("show");
+
+      imgEl.style.width = pages[index].imgWidth || "100%";
+      imgEl.style.height = pages[index].imgHeight || "auto";
+      imgEl.style.float = "none";
+      imgEl.style.margin = "15px auto 0 auto";
+
+      if (pages[index].imgPosition === "left") {
+        imgEl.style.float = "left";
+        imgEl.style.margin = "10px 20px 10px 0";
+      } else if (pages[index].imgPosition === "right") {
+        imgEl.style.float = "right";
+        imgEl.style.margin = "10px 0 10px 20px";
+      }
+
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      prevBtn.classList.remove("show");
+      nextBtn.classList.remove("show");
+
+      await typeText(titleEl, pages[index].title, 60);
+      await typeText(contentEl, pages[index].content, 40);
+      await fadeInImage(imgEl);
+
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = false;
+      prevBtn.classList.add("show");
+      nextBtn.classList.add("show");
+      nextBtn.textContent = index === pages.length - 1 ? "จบแล้ว" : "หน้าถัดไป";
+    }
+
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function prevPage() {
+      if (current > 0) {
+        current--;
+        showPage(current);
+      }
+    }
+
+    function nextPage() {
+      if (current < pages.length - 1) {
+        current++;
+        showPage(current);
+      }
+    }
+
+    showPage(current);
+  </script>
+</body>
+</html>
